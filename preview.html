@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Challenge 21 - Découvrez notre projet</title>
+  <meta name="description" content="Challenge 21 - Changez vos habitudes en 21 jours avec une application personnalisée.">
+  <meta name="keywords" content="Challenge 21, routine, productivité, suivi, efficace">
+  <meta name="author" content="Scott William Aymerick Mackenzie">
+
+  <!-- Liens vers les polices et les icônes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+  <!-- Feuilles de style Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+
+  <!-- AOS pour les animations de défilement -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+  <!-- Rellax.js pour les effets de parallaxe -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js"></script>
+
+  <!-- Styles personnalisés -->
+  <style>
+    :root {
+      --background-color: #000; /* Fond noir uni */
+      --text-color: #fff;
+      --primary-color: #28a745;
+      --highlight-color: #28a745;
+      --secondary-color: #1a1a1a;
+      --accent-color: #ff5722;
+      --transition-speed: 0.3s;
+      --font-family: 'Inter', sans-serif;
+      --particle-color: #28a745; /* Couleur des particules en vert */
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--background-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Loader */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--background-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .loader::after {
+      content: '';
+      width: 50px;
+      height: 50px;
+      border: 5px solid var(--primary-color);
+      border-top: 5px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      padding: 15px 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      transition: background-color var(--transition-speed);
+    }
+
+    nav.scrolled {
+      background-color: rgba(0, 0, 0, 1);
+    }
+
+    nav .navbar-brand {
+      font-weight: bold;
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      transition: color var(--transition-speed);
+    }
+
+    nav a {
+      color: var(--text-color);
+      padding: 10px 20px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: color var(--transition-speed), background-color var(--transition-speed);
+      border-radius: 5px;
+      margin-left: 10px;
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Contenu principal */
+    .main-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 20px; /* Ajusté pour le centrage */
+      position: relative;
+      text-align: center;
+    }
+
+    /* Conteneur des particules */
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .main-content::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 30px 40px;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      transition: box-shadow 0.3s ease, transform 0.3s ease; /* Transitions ajoutées */
+      text-align: center;
+    }
+
+    .content:hover {
+      box-shadow: 0 15px 30px rgba(40, 167, 69, 0.7);
+      transform: translateY(-5px); /* Translation ajoutée pour profondeur */
+    }
+
+    h1 {
+      position: relative; /* Pour l'effet glitch */
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--highlight-color);
+      margin-bottom: 20px;
+      animation: fadeInDown 2s ease-out, glitch 1.5s infinite;
+    }
+
+    h1::before,
+    h1::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      color: var(--highlight-color);
+      overflow: hidden;
+      clip: rect(0, 900px, 0, 0);
+    }
+
+    h1::before {
+      left: 2px;
+      text-shadow: -2px -2px var(--accent-color);
+      animation: glitchTop 1.5s infinite linear alternate-reverse;
+    }
+
+    h1::after {
+      left: -2px;
+      text-shadow: 2px 2px var(--primary-color);
+      animation: glitchBottom 1.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitchTop {
+      0% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(0);
+      }
+
+      10% {
+        clip: rect(10px, 900px, 85px, 0);
+        transform: translate(-5px, -5px);
+      }
+
+      20% {
+        clip: rect(85px, 900px, 140px, 0);
+        transform: translate(-5px, 5px);
+      }
+
+      30% {
+        clip: rect(140px, 900px, 200px, 0);
+        transform: translate(5px, -5px);
+      }
+
+      40% {
+        clip: rect(200px, 900px, 260px, 0);
+        transform: translate(5px, 5px);
+      }
+
+      50% {
+        clip: rect(260px, 900px, 320px, 0);
+        transform: translate(-5px, 5px);
+      }
+
+      60% {
+        clip: rect(320px, 900px, 380px, 0);
+        transform: translate(5px, -5px);
+      }
+
+      70% {
+        clip: rect(380px, 900px, 440px, 0);
+        transform: translate(-5px, -5px);
+      }
+
+      80% {
+        clip: rect(440px, 900px, 500px, 0);
+        transform: translate(5px, 5px);
+      }
+
+      90% {
+        clip: rect(500px, 900px, 560px, 0);
+        transform: translate(-5px, 5px);
+      }
+
+      100% {
+        clip: rect(560px, 900px, 620px, 0);
+        transform: translate(0);
+      }
+    }
+
+    @keyframes glitchBottom {
+      0% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(0);
+      }
+
+      10% {
+        clip: rect(10px, 900px, 85px, 0);
+        transform: translate(5px, 5px);
+      }
+
+      20% {
+        clip: rect(85px, 900px, 140px, 0);
+        transform: translate(5px, -5px);
+      }
+
+      30% {
+        clip: rect(140px, 900px, 200px, 0);
+        transform: translate(-5px, 5px);
+      }
+
+      40% {
+        clip: rect(200px, 900px, 260px, 0);
+        transform: translate(-5px, -5px);
+      }
+
+      50% {
+        clip: rect(260px, 900px, 320px, 0);
+        transform: translate(5px, -5px);
+      }
+
+      60% {
+        clip: rect(320px, 900px, 380px, 0);
+        transform: translate(-5px, 5px);
+      }
+
+      70% {
+        clip: rect(380px, 900px, 440px, 0);
+        transform: translate(5px, 5px);
+      }
+
+      80% {
+        clip: rect(440px, 900px, 500px, 0);
+        transform: translate(-5px, -5px);
+      }
+
+      90% {
+        clip: rect(500px, 900px, 560px, 0);
+        transform: translate(5px, -5px);
+      }
+
+      100% {
+        clip: rect(560px, 900px, 620px, 0);
+        transform: translate(0);
+      }
+    }
+
+    p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      color: #ddd;
+      animation: fadeInUp 2s ease-out;
+      animation-delay: 0.5s;
+      animation-fill-mode: forwards;
+      opacity: 0;
+    }
+
+    .highlight {
+      color: var(--highlight-color);
+      transition: color var(--transition-speed);
+    }
+
+    .highlight:hover {
+      color: var(--accent-color);
+    }
+
+    /* Timer */
+    #countdown {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: fadeInUp 2s ease-out;
+      animation-delay: 1s;
+      animation-fill-mode: forwards;
+    }
+
+    .countdown-item {
+      background: rgba(40, 167, 69, 0.2); /* Couleur adaptée aux particules vertes */
+      padding: 15px 20px;
+      border-radius: 10px;
+      min-width: 80px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      transition: background-color var(--transition-speed);
+    }
+
+    .countdown-item:hover {
+      background-color: rgba(40, 167, 69, 0.3);
+    }
+
+    .countdown-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .countdown-label {
+      font-size: 1rem;
+      color: #ddd;
+    }
+
+    /* Bouton de redirection vers Discord */
+    .btn-primary {
+      background-color: var(--primary-color);
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+      border-radius: 50px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 2s ease-out;
+      animation-delay: 1.5s;
+      animation-fill-mode: forwards;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background-color: #fff;
+      color: var(--primary-color);
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Pied de page */
+    footer {
+      background-color: rgba(0, 0, 0, 0.95);
+      text-align: center;
+      padding: 15px 0;
+      color: var(--text-color);
+      font-size: small;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+      transition: background-color var(--transition-speed);
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes glitch {
+      0% {
+        text-shadow: 2px 2px var(--accent-color);
+        transform: none;
+      }
+
+      20% {
+        text-shadow: -2px -2px var(--primary-color);
+        transform: skew(-0.5deg);
+      }
+
+      40% {
+        text-shadow: 2px -2px var(--accent-color);
+        transform: skew(0.5deg);
+      }
+
+      60% {
+        text-shadow: -2px 2px var(--primary-color);
+        transform: skew(-0.5deg);
+      }
+
+      80% {
+        text-shadow: 2px 2px var(--accent-color);
+        transform: skew(0.5deg);
+      }
+
+      100% {
+        text-shadow: -2px -2px var(--primary-color);
+        transform: none;
+      }
+    }
+
+    /* Pseudo-éléments pour un effet glitch plus réaliste */
+    h1::before,
+    h1::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      color: var(--highlight-color);
+      overflow: hidden;
+      clip: rect(0, 900px, 0, 0);
+    }
+
+    h1::before {
+      left: 2px;
+      text-shadow: -2px -2px var(--accent-color);
+      animation: glitchTop 1.5s infinite linear alternate-reverse;
+    }
+
+    h1::after {
+      left: -2px;
+      text-shadow: 2px 2px var(--primary-color);
+      animation: glitchBottom 1.5s infinite linear alternate-reverse;
+    }
+
+    /* Responsivité */
+    @media (max-width: 992px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .carousel-item h2 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 1.2rem;
+      }
+
+      .btn-primary {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+      }
+
+      .countdown-item {
+        min-width: 70px;
+        padding: 12px 15px;
+      }
+
+      .countdown-number {
+        font-size: 1.8rem;
+      }
+
+      .countdown-label {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .carousel-item h2 {
+        font-size: 1.3rem;
+      }
+
+      p {
+        font-size: 1.1rem;
+      }
+
+      .btn-primary {
+        padding: 10px 25px;
+        font-size: 1rem;
+      }
+
+      .countdown-item {
+        min-width: 60px;
+        padding: 10px 12px;
+      }
+
+      .countdown-number {
+        font-size: 1.6rem;
+      }
+
+      .countdown-label {
+        font-size: 0.8rem;
+      }
+
+      .main-content {
+        padding-top: 130px;
+        padding-bottom: 80px;
+      }
+
+      nav .navbar-brand {
+        font-size: 1.5rem;
+      }
+
+      nav a {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .carousel-item h2 {
+        font-size: 1.1rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .btn-primary {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+      }
+
+      .countdown-item {
+        min-width: 50px;
+        padding: 8px 10px;
+      }
+
+      .countdown-number {
+        font-size: 1.4rem;
+      }
+
+      .countdown-label {
+        font-size: 0.7rem;
+      }
+
+      nav .navbar-brand {
+        font-size: 1.3rem;
+      }
+
+      nav a {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+
+      .main-content {
+        padding-top: 120px;
+        padding-bottom: 60px;
+      }
+    }
+
+    /* Carousel */
+    .carousel-container {
+      position: relative; /* Positionnement relatif pour les indicateurs */
+      margin-bottom: 100px;
+      opacity: 0;
+      animation: fadeInUp 2s ease-out;
+      animation-delay: 0.5s;
+      animation-fill-mode: forwards;
+    }
+
+    .carousel-item {
+      padding: 30px;
+      transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out; /* Transitions améliorées */
+    }
+
+    .carousel-item h2 {
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .carousel-item p {
+      font-size: 1.1rem;
+      color: #ddd;
+    }
+
+    /* Style pour les listes personnalisées */
+    .custom-list {
+      list-style: none; /* Supprime les puces par défaut */
+      padding-left: 0;
+      text-align: left; /* Alignement à gauche pour une meilleure lisibilité */
+      margin: 0 auto; /* Centrage horizontal si nécessaire */
+      max-width: 600px; /* Limite la largeur pour une meilleure lisibilité */
+    }
+
+    .custom-list li {
+      position: relative;
+      padding-left: 20px; /* Espace pour la puce personnalisée */
+      margin-bottom: 10px; /* Espacement entre les éléments */
+      line-height: 1.6; /* Amélioration de la lisibilité */
+    }
+
+    .custom-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px; /* Taille de la puce */
+      height: 8px;
+      background-color: var(--primary-color); /* Couleur de la puce */
+      border-radius: 50%; /* Forme ronde */
+    }
+
+    /* Suppression des effets de survol sur les puces */
+    .custom-list li:hover::before {
+      /* Aucune modification pour la puce au survol */
+      background-color: var(--primary-color);
+      transform: translateY(-50%);
+    }
+
+    /* Suppression du changement de curseur sur les listes */
+    .custom-list li {
+      cursor: default;
+    }
+
+    /* Custom Carousel Arrows - Modernes et Minimalistes */
+    .carousel-control-prev,
+    .carousel-control-next {
+      width: 5%;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background: none; /* Suppression de l'arrière-plan coloré */
+      border: none; /* Suppression des bordures */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      color: #fff; /* Couleur des icônes */
+      opacity: 0.7; /* Opacité réduite pour discrétion */
+      transition: opacity var(--transition-speed), transform var(--transition-speed);
+      cursor: pointer;
+    }
+
+    .carousel-control-prev-icon:hover,
+    .carousel-control-next-icon:hover {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    .carousel-control-prev-icon i,
+    .carousel-control-next-icon i {
+      font-size: 1.5rem; /* Taille des icônes */
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Ombre légère */
+      transition: transform var(--transition-speed), color var(--transition-speed);
+    }
+
+    /* Responsivité des Flèches */
+    @media (max-width: 768px) {
+      .carousel-control-prev-icon,
+      .carousel-control-next-icon {
+        width: 30px;
+        height: 30px;
+      }
+
+      .carousel-control-prev-icon i,
+      .carousel-control-next-icon i {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Stylisation des Indicateurs de Carrousel (Petits Points) */
+    .carousel-indicators {
+      position: absolute;
+      bottom: 0px; /* Ajustement pour un meilleur alignement */
+      display: flex;
+      justify-content: center; /* Centrage horizontal */
+      gap: 8px; /* Espacement entre les points */
+      padding-left: 0; /* Suppression du padding par défaut */
+      list-style: none; /* Suppression des puces par défaut */
+    }
+
+    .carousel-indicators button {
+      width: 6px; /* Réduction de la largeur */
+      height: 6px; /* Réduction de la hauteur */
+      border-radius: 50%;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.5);
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+      cursor: pointer;
+      padding: 0; /* Suppression du padding */
+    }
+
+    .carousel-indicators button.active {
+      background-color: #fff;
+      transform: scale(1.2); /* Ajustement de l'agrandissement */
+    }
+
+    .carousel-indicators button:hover {
+      background-color: #fff;
+      transform: scale(1.3); /* Ajustement de l'agrandissement lors du survol */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Loader -->
+  <div id="loader" class="loader"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Challenge 21</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Basculer la navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Suppression des liens de connexion -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <!-- Le lien "Rejoindre Discord" a été supprimé -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenu principal -->
+  <main class="main-content">
+    <!-- Conteneur des particules -->
+    <div id="particles-js"></div>
+
+    <div class="content animate__animated animate__fadeIn">
+      <h1 data-text="Challenge 21 - Changez vos habitudes en 21 jours">Challenge 21 - Changez vos habitudes en 21 jours</h1>
+
+      <!-- Carousel pour les nouvelles descriptions -->
+      <div id="featureCarousel" class="carousel slide carousel-container" data-bs-ride="carousel" data-bs-interval="12000">
+        <!-- Indicateurs de Carrousel -->
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#featureCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Diapositive 1"></button>
+          <button type="button" data-bs-target="#featureCarousel" data-bs-slide-to="1" aria-label="Diapositive 2"></button>
+          <button type="button" data-bs-target="#featureCarousel" data-bs-slide-to="2" aria-label="Diapositive 3"></button>
+          <button type="button" data-bs-target="#featureCarousel" data-bs-slide-to="3" aria-label="Diapositive 4"></button>
+          <button type="button" data-bs-target="#featureCarousel" data-bs-slide-to="4" aria-label="Diapositive 5"></button>
+          <button type="button" data-bs-target="#featureCarousel" data-bs-slide-to="5" aria-label="Diapositive 6"></button>
+          <button type="button" data-bs-target="#featureCarousel" data-bs-slide-to="6" aria-label="Diapositive 7"></button>
+        </div>
+
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <h2>Créez et Suivez Votre Routine</h2>
+            <ul class="custom-list">
+              <li>Créer votre routine rapidement et simplement.</li>
+              <li>Accéder à des données précises pour comprendre vos points faibles.</li>
+            </ul>
+          </div>
+          <div class="carousel-item">
+            <h2>Gamification et Système de Quêtes</h2>
+            <ul class="custom-list">
+              <li>Gamifiez vos journées grâce à un système de quêtes et de récompenses.</li>
+              <li>Accomplissez vos tâches quotidiennes de manière ludique et motivante.</li>
+              <li>Ressentez un réel sentiment d'accomplissement chaque jour.</li>
+            </ul>
+          </div>
+          <div class="carousel-item">
+            <h2>Votre Assistant Personnel d'Organisation</h2>
+            <ul class="custom-list">
+              <li>Challenge 21 est une application complète qui vous aide à organiser tous les aspects de votre vie.</li>
+              <li>Comme un assistant personnel, elle vous fournit des informations et des conseils personnalisés.</li>
+              <li>Obtenez des recommandations au fur et à mesure que vous utilisez l'application.</li>
+            </ul>
+          </div>
+          <div class="carousel-item">
+            <h2>Personnalisation et Adaptabilité</h2>
+            <ul class="custom-list">
+              <li>Que vous souhaitiez prendre ou perdre une habitude, Challenge 21 s'adapte à vos besoins spécifiques.</li>
+              <li>Des programmes personnalisés pour chaque type d'addiction ou habitude.</li>
+              <li>Offre une expérience unique à chaque utilisateur.</li>
+            </ul>
+          </div>
+          <div class="carousel-item">
+            <h2>Communauté et Motivation</h2>
+            <ul class="custom-list">
+              <li>Connectez-vous avec vos amis ou trouvez des personnes du monde entier partageant les mêmes objectifs.</li>
+              <li>Participez ensemble à des routines, suivez vos progrès et motivez-vous mutuellement.</li>
+              <li>Atteignez vos objectifs grâce au soutien de la communauté.</li>
+            </ul>
+          </div>
+          <div class="carousel-item">
+            <h2>Classements et Détermination</h2>
+            <ul class="custom-list">
+              <li>Mettez vos efforts en lumière avec notre système de classement.</li>
+              <li>Les utilisateurs les plus déterminés seront mis en avant.</li>
+              <li>Inspirez ainsi toute la communauté par votre constance et votre engagement.</li>
+            </ul>
+          </div>
+          <div class="carousel-item">
+            <h2>Gratuit et Sans Publicité</h2>
+            <ul class="custom-list">
+              <li>Challenge 21 est gratuit et sans publicité.</li>
+              <li>Profitez de toutes les fonctionnalités sans coûts cachés ni interruptions.</li>
+              <li>Une expérience utilisateur optimale et fluide.</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Contrôles du carousel -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#featureCarousel" data-bs-slide="prev" aria-label="Précédent">
+          <span class="carousel-control-prev-icon" aria-hidden="true">
+            <i class="bi bi-chevron-left"></i>
+          </span>
+          <span class="visually-hidden">Précédent</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#featureCarousel" data-bs-slide="next" aria-label="Suivant">
+          <span class="carousel-control-next-icon" aria-hidden="true">
+            <i class="bi bi-chevron-right"></i>
+          </span>
+          <span class="visually-hidden">Suivant</span>
+        </button>
+      </div>
+
+      <!-- Timer -->
+      <div id="countdown">
+        <div class="countdown-item">
+          <div id="days" class="countdown-number">00</div>
+          <div class="countdown-label">Jours</div>
+        </div>
+        <div class="countdown-item">
+          <div id="hours" class="countdown-number">00</div>
+          <div class="countdown-label">Heures</div>
+        </div>
+        <div class="countdown-item">
+          <div id="minutes" class="countdown-number">00</div>
+          <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-item">
+          <div id="seconds" class="countdown-number">00</div>
+          <div class="countdown-label">Secondes</div>
+        </div>
+      </div>
+
+      <!-- Bouton de redirection vers Discord -->
+      <a href="https://discord.gg/usg82VVNsT" class="btn btn-primary" id="launchButton">Suivre le projet</a>
+    </div>
+  </main>
+
+  <!-- Pied de page -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Challenge 21. Tous droits réservés.</p>
+      <!-- Les icônes des réseaux sociaux ont été supprimées -->
+      <!-- 
+      <div class="social-icons">
+        <a href="#" class="me-2"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="me-2"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="me-2"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-linkedin"></i></a>
+      </div>
+      -->
+    </div>
+  </footer>
+
+  <!-- Inclusion des fichiers JavaScript -->
+  <!-- particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- AOS JS pour les animations de défilement -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <!-- Rellax.js pour les effets de parallaxe -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js"></script>
+
+  <!-- Script personnalisé -->
+  <script>
+    // Initialiser AOS
+    AOS.init();
+
+    // Initialiser Rellax pour les effets de parallaxe
+    var rellax = new Rellax('.rellax');
+
+    // Masquer le loader une fois la page chargée
+    window.addEventListener('load', () => {
+      document.getElementById('loader').style.display = 'none';
+    });
+
+    // Définir la date cible au 1er février 2025 à 6h00
+    const targetDate = new Date("February 1, 2025 06:00:00").getTime();
+
+    // Mettre à jour le compte à rebours chaque seconde
+    const countdownFunction = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      // Calculer le temps restant
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Afficher les résultats
+      document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+      document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+      document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+      document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+      // Si le compte à rebours est terminé
+      if (distance < 0) {
+        clearInterval(countdownFunction);
+        document.getElementById("countdown").innerHTML = "<h2>Le Challenge 21 a commencé !</h2>";
+        document.getElementById("launchButton").style.display = "block";
+      }
+    }, 1000);
+
+    // Initialiser particles.js avec des particules vertes
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#28a745"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 5
+          }
+        },
+        "opacity": {
+          "value": 0.5,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#28a745",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    });
+
+    // Ajout de la classe 'scrolled' à la navbar lors du défilement
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
+</body>
+
+</html>
