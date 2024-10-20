@@ -1,5 +1,7 @@
-// Initialiser AOS pour les animations de défilement
-AOS.init();
+// Initialiser AOS pour les animations de défilement après le chargement du contenu
+document.addEventListener('DOMContentLoaded', () => {
+  AOS.init();
+});
 
 // Masquer le loader une fois la page chargée
 window.addEventListener('load', () => {
@@ -119,7 +121,7 @@ particlesJS("particles-js", {
   "retina_detect": true
 });
 
-// Ajout de la classe 'scrolled' à la navbar lors du défilement
+// Ajouter la classe 'scrolled' à la navbar lors du défilement
 window.addEventListener('scroll', () => {
   const navbar = document.querySelector('nav');
   if (navbar) {
@@ -143,6 +145,8 @@ function translatePage(lang = null) {
     selectedLang = 'fr';
   }
 
+  console.log(`Langue sélectionnée : ${selectedLang}`);
+
   // Charger le fichier JSON de la langue sélectionnée
   fetch(`lang/${selectedLang}.json`)
     .then(response => {
@@ -152,6 +156,7 @@ function translatePage(lang = null) {
       return response.json();
     })
     .then(translations => {
+      console.log(`Traductions chargées pour ${selectedLang}:`, translations);
       const elems = document.querySelectorAll('[data-i18n]');
       elems.forEach(elem => {
         const key = elem.getAttribute('data-i18n');
@@ -199,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     selector.addEventListener('click', (e) => {
       e.preventDefault();
       const selectedLang = e.currentTarget.getAttribute('data-lang');
+      console.log(`Langue sélectionnée via le sélecteur : ${selectedLang}`);
       translatePage(selectedLang);
     });
   });
