@@ -489,7 +489,7 @@ footer p {
 /* Indicateurs du carousel */
 .carousel-indicators {
   position: absolute;
-  bottom: 0px;
+  bottom: -20px;
   display: flex;
   justify-content: center;
   gap: 8px;
@@ -500,7 +500,7 @@ footer p {
 .carousel-indicators button {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  border-radius: 100%;
   border: none;
   background-color: rgba(255, 255, 255, 0.5);
   transition: background-color var(--transition-speed), transform var(--transition-speed);
